@@ -35,7 +35,12 @@ class Transaction extends Model
 
     public function account()
     {
-        return $this->belongsTo(Account::class, 'account_id', 'code');
+        return $this->belongsTo(Account::class, 'account_id', 'id');
+    }
+
+    public function scopeOrderDate($query)
+    {
+        return $query->orderBy('bookingDate', 'desc');
     }
 
     public function getDebtorFullNameAttribute()

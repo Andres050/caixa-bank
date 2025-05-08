@@ -56,28 +56,106 @@ class Account extends Model
         return $this->hasMany(Balance::class, 'account_id', 'code');
     }
 
+    public function bankDataSync()
+    {
+        return $this->hasMany(BankDataSync::class, 'account_id', 'code');
+    }
+
+    public function scopeSortOrder($query)
+    {
+        return $query->orderBy('order', 'asc');
+    }
+
+    public function getUsedColors(&$usedColors)
+    {
+        do {
+            $r = mt_rand(0, 180);
+            $g = mt_rand(0, 255);
+            $b = mt_rand(180, 255);
+            $color = sprintf("#%02X%02X%02X", $r, $g, $b);
+        } while (in_array($color, $usedColors));
+        $usedColors[] = $color;
+        return $color;
+    }
+
+    public function getTransactionsDisabledAttribute()
+    {
+        return $this->transactions_disabled_date !== null && $this->transactions_disabled_date->isFuture();
+    }
+
+    public function getBalanceDisabledAttribute()
+    {
+        return $this->balance_disabled_date !== null && $this->balance_disabled_date->isFuture();
+    }
+
     public function getTransactionsCurrentMonthAttribute()
     {
+        $date = session('month') ?? now()->format('m-Y');
+        $parsedDate = \Carbon\Carbon::createFromFormat('m-Y', $date);
+
+        $startOfMonth = $parsedDate->copy()->startOfMonth()->startOfDay();
+        $endOfMonth = $parsedDate->copy()->endOfMonth()->endOfDay();
+
         return $this->transactions()
-            ->whereBetween('bookingDate', [now()->format('Y-m-01 00:00:00'), now()->format('Y-m-t 23:59:59')])
-            ->orderBy('bookingDate', 'desc')
+            ->whereBetween('bookingDate', [$startOfMonth, $endOfMonth])
+            ->orderDate()
+            ->get();
+    }
+
+    public function getTransactionsExpensesCurrentMonthAttribute()
+    {
+        $date = session('month') ?? now()->format('m-Y');
+        $parsedDate = \Carbon\Carbon::createFromFormat('m-Y', $date);
+
+        $startOfMonth = $parsedDate->copy()->startOfMonth()->startOfDay();
+        $endOfMonth = $parsedDate->copy()->endOfMonth()->endOfDay();
+
+        return $this->transactions()
+            ->whereBetween('bookingDate', [$startOfMonth, $endOfMonth])
+            ->where('transactionAmount_amount', '<', 0)
+            ->orderDate()
+            ->get();
+    }
+
+    public function getTransactionsIncomeCurrentMonthAttribute()
+    {
+        $date = session('month') ?? now()->format('m-Y');
+        $parsedDate = \Carbon\Carbon::createFromFormat('m-Y', $date);
+
+        $startOfMonth = $parsedDate->copy()->startOfMonth()->startOfDay();
+        $endOfMonth = $parsedDate->copy()->endOfMonth()->endOfDay();
+
+        return $this->transactions()
+            ->whereBetween('bookingDate', [$startOfMonth, $endOfMonth])
+            ->where('transactionAmount_amount', '>', 0)
+            ->orderDate()
             ->get();
     }
 
     public function getExpensesAttribute()
     {
+        $date = session('month') ?? now()->format('m-Y');
+        $parsedDate = \Carbon\Carbon::createFromFormat('m-Y', $date);
+
+        $startOfMonth = $parsedDate->copy()->startOfMonth()->startOfDay();
+        $endOfMonth = $parsedDate->copy()->endOfMonth()->endOfDay();
+
         return $this->transactions()
-            ->whereBetween('bookingDate', [now()->format('Y-m-01 00:00:00'), now()->format('Y-m-t 23:59:59')])
-            // Where transactionAmount_amount is less than 0
+            ->whereBetween('bookingDate', [$startOfMonth, $endOfMonth])
             ->where('transactionAmount_amount', '<', 0)
             ->sum('transactionAmount_amount');
     }
 
     public function getIncomeAttribute()
     {
+        $date = session('month') ?? now()->format('m-Y');
+        $parsedDate = \Carbon\Carbon::createFromFormat('m-Y', $date);
+
+        $startOfMonth = $parsedDate->copy()->startOfMonth()->startOfDay();
+        $endOfMonth = $parsedDate->copy()->endOfMonth()->endOfDay();
+
         return $this->transactions()
-            ->whereBetween('bookingDate', [now()->format('Y-m-01 00:00:00'), now()->format('Y-m-t 23:59:59')])
-            // Where transactionAmount_amount is greater than 0
+            ->whereBetween('bookingDate', [$startOfMonth, $endOfMonth])
             ->where('transactionAmount_amount', '>', 0)
             ->sum('transactionAmount_amount');
     }

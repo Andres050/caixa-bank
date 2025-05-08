@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NordigenController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
@@ -28,6 +29,17 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $user = auth()->user();
+
+        // Check if execute Nordigen function on login
+        if ($user && $user->execute_login) {
+            $logger = $user->logger;
+
+            $user->executeAccountTasks();
+
+            $logger->info("✅ Ejecutando tarea programada para {$user->email} al iniciar sesión");
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

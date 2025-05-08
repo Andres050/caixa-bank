@@ -5,7 +5,7 @@
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Update your account's bank information.") }}
+            {{ __("If there is no banks please, click update list for banks to be added.") }}
         </p>
 
         <form method="post" action="{{ route('nordigen.institutions') }}">
@@ -22,17 +22,11 @@
         @csrf
         @method('patch')
 
-        @php
-            $user = auth()->user();
-            $institutions = \App\Models\Institution::all();
-            $bank = \App\Models\Bank::where('user_id', $user->id)->first();
-        @endphp
-
         <div>
             <x-input-label for="name" :value="__('Institution')" />
-            <select id="institution" name="institution" class="select2 form-control border-gray-300 dark:border-gray-700 dark:bg-[#1c1d20] dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full" required>
+            <select data-default="{{ __('-- Select an option --') }}" id="institution" name="institution" class="select2 form-control border-gray-300 dark:border-gray-700 dark:bg-[#1c1d20] dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full" required>
                 <option value="" disabled selected>{{ __('Select an institution') }}</option>
-                @foreach ($institutions as $institution)
+                @foreach (\App\Models\Institution::all() as $institution)
                     <option value="{{ $institution->id }}" {{ $bank && $bank->institution_id == $institution->id ? 'selected' : '' }}>
                         {{ $institution->name }}
                     </option>

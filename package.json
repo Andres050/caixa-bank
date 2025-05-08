@@ -14,5 +14,16 @@
         "postcss": "^8.5.3",
         "tailwindcss": "^3.4.17",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "chart.js": "^4.4.9",
+        "datatables.net": "^2.3.0",
+        "datatables.net-dt": "^2.3.0",
+        "datatables.net-plugins": "^2.3.0",
+        "datetime-moment": "^1.0.0",
+        "jquery": "^3.7.1",
+        "moment": "^2.30.1",
+        "select2": "^4.1.0-rc.0",
+        "sortablejs": "^1.15.6"
     }
 }

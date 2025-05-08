@@ -11,7 +11,7 @@
             <nav class="md:block flex justify-center gap-4 space-y-3">
                 @foreach($accounts as $account)
                     <a style="--tw-space-y-reverse: 0;margin-top: calc(.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom: calc(.75rem * var(--tw-space-y-reverse));" href="{{ route('bank.show', ['id' => $account->code]) }}" class="block px-4 py-2 rounded-lg  @if (isset($currentAccount) and $account->code == $currentAccount->code) bg-[#2b2d30] @endif hover:bg-[#2b2d30] text-gray-300">
-                        {{ __('Account') }} <br/> <span style="font-size: 10px">{{ $account->iban }}</span>
+                        {{ __('Account') }} <br/> <span class="text-[10px]">{{ $account->iban }}</span>
                     </a>
                 @endforeach
             </nav>
@@ -20,24 +20,27 @@
         <div class="min-h-screen w-full  text-white p-6">
             @if ($currentAccount)
                 @php
-                    $balance = $currentAccount->balances()->balanceTypeForward()->first();
+                    $balance = $currentAccount->balances()->balanceTypeForward()->lastInstance();
                 @endphp
 
                 @if ($balance)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                         <x-stat-box icon="💳" title="{{ __('Current Balance') }}" value="{{ number_format($balance->amount, 2, ',', '.') }} €" />
-                        <x-stat-box icon="💸" title="{{ __('Expenses This Month') }}" value="{{ number_format($currentAccount->expenses, 2, ',', '.') }} €" />
-                        <x-stat-box icon="📈" title="{{ __('Income This Month') }}" value="{{ number_format($currentAccount->income, 2, ',', '.') }} €" />
+                        <x-stat-box icon="💸" title="{{ __('Expenses') }}" value="{{ number_format($currentAccount->expenses, 2, ',', '.') }} €" />
+                        <x-stat-box icon="📈" title="{{ __('Income') }}" value="{{ number_format($currentAccount->income, 2, ',', '.') }} €" />
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        @php
+                            $usedColors = [];
+                        @endphp
                         <div class="bg-[#1c1d20] p-4 rounded-xl shadow">
                             <h2 class="text-xl mb-4">{{ __('Expenses by Category') }}</h2>
-                            <canvas id="categoryChart" class="!w-full md:px-[25%] md:!h-96"></canvas>
+                            <canvas id="categoryChart" data-colors="@foreach($currentAccount->transactionsExpensesCurrentMonth->groupBy('remittanceInformationUnstructured') as $group){{ $currentAccount->getUsedColors($usedColors) }}{{ !$loop->last ? ',' : '' }}@endforeach" data-values="@foreach($currentAccount->transactionsExpensesCurrentMonth->groupBy('remittanceInformationUnstructured') as $group) {{ $group->sum('transactionAmount_amount') }} {{ !$loop->last ? ',' : '' }} @endforeach" data-labels="{!! $currentAccount->transactionsExpensesCurrentMonth->groupBy('remittanceInformationUnstructured')->keys()->map(fn($key) => trim((string) $key, '[]"'))->implode(',') !!}"></canvas>
                         </div>
-                        <div class="bg-[#1c1d20] p-4 rounded-xl shadow">
+                        <div class="bg-[#1c1d20] col-span-2 p-4 rounded-xl shadow">
                             <h2 class="text-xl mb-4">{{ __('Balance History') }}</h2>
-                            <canvas id="balanceChart" class="!w-full md:!h-96"></canvas>
+                            <canvas id="balanceChart" data-values="{{ $currentAccount->balances()->balanceTypeForward()->currentMonth()->pluck('amount')->implode(',') }}" data-labels="{!! $currentAccount->balances()->balanceTypeForward()->currentMonth()->pluck('reference_date')->map(fn($key) => trim((string) $key, '[]"'))->implode(',') !!}" style="height: 100% !important;"></canvas>
                         </div>
                     </div>
 
@@ -78,35 +81,4 @@
             @endif
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const categoryCtx = document.getElementById('categoryChart');
-        new Chart(categoryCtx, {
-            type: 'doughnut',
-            data: {
-                labels: [{!! $currentAccount->transactionsCurrentMonth->groupBy('remittanceInformationUnstructured')->keys()->map(fn($key) => "'" . trim((string) $key, '[]"') . "'")->implode(',') !!}],
-                datasets: [{
-                    label: 'Expenses',
-                    data: [@foreach($currentAccount->transactionsCurrentMonth->groupBy('remittanceInformationUnstructured') as $group) {{ $group->sum('transactionAmount_amount') }} {{ !$loop->last ? ',' : '' }} @endforeach],
-                    backgroundColor: [@foreach($currentAccount->transactionsCurrentMonth->groupBy('remittanceInformationUnstructured') as $group) '{{ "hsl(" . ($loop->index * 40 % 360) . ", 70%, 60%)" }}' {{ !$loop->last ? ',' : '' }} @endforeach],
-                }]
-            }
-        });
-
-        const balanceCtx = document.getElementById('balanceChart');
-        new Chart(balanceCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Oct'],
-                datasets: [{
-                    label: 'Balance',
-                    data: [{{ $currentAccount->balances()->balanceTypeForward()->pluck('amount')->implode(',') }}],
-                    borderColor: '#108cb9',
-                    backgroundColor: 'transparent',
-                    tension: 0.4
-                }]
-            }
-        });
-    </script>
 </x-app-layout>

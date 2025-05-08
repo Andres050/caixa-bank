@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        \Log::info("✅ Laravel scheduler ejecutado a " . now());
+        $schedule->command('accounts:scheduletasks')->everyMinute()->withoutOverlapping();
     }
 
     /**
