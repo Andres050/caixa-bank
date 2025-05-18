@@ -16,7 +16,7 @@ $(document).ready(function () {
             }
         }).then(response => response.json()).then(data => {
             if (data.update) {
-                window.location.reload();
+                //window.location.reload();
             }
         });
     }

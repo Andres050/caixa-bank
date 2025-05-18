@@ -5,8 +5,8 @@
             <a href="{{ route('dashboard.show', ['id' => $account->code]) }}"
                class="block px-4 py-2 rounded-lg u-sidebar
                @if (isset($currentAccount) and $account->code == $currentAccount->code)
-               bg-main1
-               @endif hover:bg-main1 text-primary">
+               bg-main3
+               @endif hover:bg-main3 text-primary">
                 {{ __('Account') }} <br/> <span class="text-[10px]">{{ $account->iban }}</span>
             </a>
         @endforeach

@@ -92,9 +92,9 @@
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <div class="pt-4 pb-3 px-4 flex">
+                <div class="pt-4 pb-3 px-4 flex -md:gap-2">
                     @foreach(['es', 'en'] as $lang)
-                        <x-inputs.dropdown-link href="{{ route('lang.switch', $lang) }}" class="uppercase !w-12">
+                        <x-inputs.dropdown-link href="{{ route('lang.switch', $lang) }}" :active="app()->getLocale() == $lang" class="rounded-lg uppercase md:!w-12 c-lang">
                             {{ $lang }}
                         </x-inputs.dropdown-link>
                     @endforeach

@@ -13,13 +13,15 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        @vite(['resources/css/fonts.css'])
+
         <!-- Scripts -->
         @vite(['resources/js/app.js', 'resources/css/app.css'])
 
         @vite(['resources/css/select2.css'])
         @vite(['resources/css/datatable.css'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-Inter antialiased">
         <div class="min-h-screen bg-main1">
             <x-site.flash-messages />
             <x-site.navigation />

@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "npm run export:colors && vite",
         "build": "npm run export:colors && vite build",
         "export:colors": "node export-tailwind-colors.js"
     },

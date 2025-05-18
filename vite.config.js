@@ -9,6 +9,8 @@ export default defineConfig({
                 'resources/css/select2.css',
                 'resources/css/datatable.css',
 
+                'resources/css/fonts.css',
+
                 'resources/js/app.js',
             ],
             refresh: true,

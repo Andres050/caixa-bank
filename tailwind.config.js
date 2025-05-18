@@ -10,7 +10,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree'],
+                sans: ['Oswald', 'Inter', 'sans-serif'],
             },
             transitionDuration: {
                 DEFAULT: '300ms',

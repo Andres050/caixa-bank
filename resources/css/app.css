@@ -3,13 +3,7 @@
 @tailwind utilities;
 
 .u-clock {
-    @apply bg-main1 text-primary border-[4px] border-primary drop-shadow-secondary;
-
-    padding: 20px;
-    border-radius: 20px;
-
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 5em;
+    @apply -md:w-full text-center -md:mx-[50px] bg-main1 text-primary border-[4px] border-main3 drop-shadow-secondary p-[15px] md:py-[40px] md:px-[60px] rounded-[20px] text-[2em] lg:text-[5em];
 }
 
 .u-sidebar {
@@ -22,8 +16,10 @@
     @apply drop-shadow-primary;
 }
 
+.c-lang[active] {
+    @apply bg-main1 text-primary;
+}
+
 .c-logo__container {
-    width: 40px;
-    height: 40px;
-    display: block;
+    @apply w-[40px] h-[40px] block;
 }

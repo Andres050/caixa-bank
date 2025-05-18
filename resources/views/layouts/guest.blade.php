@@ -19,7 +19,7 @@
         @vite(['resources/css/select2.css'])
         @vite(['resources/css/datatable.css'])
     </head>
-    <body class="font-sans text-main2 antialiased">
+    <body class="font-Inter text-main2 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-main1">
             <x-site.flash-messages />
 
