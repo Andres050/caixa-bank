@@ -1,0 +1,14 @@
+{
+  "main1": "#0e0f11",
+  "main2": "#1a1b1e",
+  "main3": "#2d43b0",
+  "primary": "#FFFFFF",
+  "secondary": "#9ca3af",
+  "third": "#374151",
+  "navActive": "#a5b4fc",
+  "navActiveBg": "#312e8150",
+  "success": "#33c034",
+  "error": "#d03022",
+  "warning": "#FF9800",
+  "info": "#055160"
+}

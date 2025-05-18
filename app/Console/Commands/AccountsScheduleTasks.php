@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class AccountsScheduleTasks extends Command
@@ -23,9 +24,9 @@ class AccountsScheduleTasks extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        $users = \App\Models\User::with('schedule')->get();
+        $users = User::with('schedule')->get();
         $ahora = now()->format('H:i');
 
         foreach ($users as $user) {

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -12,7 +13,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        \Log::info("✅ Laravel scheduler ejecutado a " . now());
+        //Log::info("✅ Laravel scheduler ejecutado a " . now());
         $schedule->command('accounts:scheduletasks')->everyMinute()->withoutOverlapping();
     }
 

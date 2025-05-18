@@ -20,12 +20,13 @@
         @vite(['resources/css/datatable.css'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-[#111214]">
-            @include('layouts.navigation')
+        <div class="min-h-screen bg-main1">
+            <x-site.flash-messages />
+            <x-site.navigation />
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-[#1c1d20] shadow">
+                <header class="bg-main2 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>

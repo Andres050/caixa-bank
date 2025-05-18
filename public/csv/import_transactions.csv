@@ -1,0 +1,2 @@
+Entry Reference,Check ID,Booking Date,Value Date,Transaction Amount,Currency,Remittance Information,Bank Transaction Code,Proprietary Bank Transaction Code,Internal Transaction ID,Debtor Name,Debtor Account,Account ID
+1234567890,1234567890,11-05-2025 18:03:21,11-05-2025 18:03:21,"100,22",EUR,Payment for services,1234,5678,abcd1234,John Doe,DE89370400440532013000,6820
