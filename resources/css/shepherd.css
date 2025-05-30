@@ -1,0 +1,31 @@
+.c-shepherd {
+    margin-top: 5px !important;
+}
+
+.shepherd-content {
+    @apply border-main3 border-2 rounded-lg shadow-lg !important;
+}
+
+.shepherd-element {
+    @apply bg-main2 border border-third rounded-lg shadow-lg text-primary font-sans !important;
+}
+
+.shepherd-title {
+    @apply text-primary text-base font-semibold bg-main1 px-4 py-3 border-b border-third rounded-t-lg !important;
+}
+
+.shepherd-text {
+    @apply px-4 py-4 text-primary rounded-lg bg-main2 text-sm !important;
+}
+
+.shepherd-button {
+    @apply bg-primary text-main2 border-none px-4 py-2 m-2 rounded-md font-medium cursor-pointer transition-colors duration-300 !important;
+
+    &:hover {
+        @apply bg-main2 text-primary !important;
+    }
+}
+
+.shepherd-arrow::before {
+    @apply bg-navActiveBg border-navActiveBg !important;
+}

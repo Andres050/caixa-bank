@@ -63,3 +63,6 @@ import '/resources/js/library/clock.js';
 
 // NOTIFICATION JS
 import '/resources/js/library/notifications.js';
+
+// INTERACTIVE DOCUMENTATION JS
+import '/resources/js/library/documentation.js';

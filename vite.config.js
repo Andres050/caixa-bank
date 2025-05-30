@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/select2.css',
                 'resources/css/datatable.css',
+                'resources/css/shepherd.css',
 
                 'resources/css/fonts.css',
 

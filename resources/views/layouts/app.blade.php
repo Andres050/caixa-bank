@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+    <head dir="{{ Route::currentRouteName() }}" next-translation="{{ __('Next') }}" close-translation="{{ __('Close') }}">
         <meta charset="utf-8">
         <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,10 +18,33 @@
         <!-- Scripts -->
         @vite(['resources/js/app.js', 'resources/css/app.css'])
 
+        @vite(['resources/css/shepherd.css'])
+
         @vite(['resources/css/select2.css'])
         @vite(['resources/css/datatable.css'])
+
+        <style>
+            /** Custom styles for the application */
+            @if (auth()->user()->themeMain3)
+                :root {
+                    --color-main3: {{ auth()->user()->themeMain3 }} !important;
+                }
+            @endif
+
+            @if (auth()->user()->themeNavActive)
+                :root {
+                    --color-navActive: {{ auth()->user()->themeNavActive }} !important;
+                }
+            @endif
+
+            @if (auth()->user()->themeNavActiveBg)
+                :root {
+                    --color-navActiveBg: {{ auth()->user()->themeNavActiveBg }} !important;
+                }
+            @endif
+        </style>
     </head>
-    <body class="font-Inter antialiased">
+    <body id="default-step" shepherd-text="{{trans('shepherd.default')}}" class="font-Inter antialiased">
         <div class="min-h-screen bg-main1">
             <x-site.flash-messages />
             <x-site.navigation />
@@ -36,7 +59,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="relative">
                 {{ $slot }}
             </main>
         </div>

@@ -175,7 +175,7 @@ class DatatableController extends Controller
         $search = $request->input('search', '');
         $orderDir = $request->input('order_dir', 'desc');
 
-        $validOrderColumns = ['iban', 'bookingDate', 'debtorName', 'remittanceInformationUnstructured', 'transactionAmount_amount'];
+        $validOrderColumns = ['iban', 'bookingDate', 'debtorName', 'remittanceInformationUnstructured', 'category_id', 'transactionAmount_amount'];
         $orderBy = $request->input('order_by', 'bookingDate');
 
         if (!in_array($orderBy, $validOrderColumns)) {
@@ -197,12 +197,14 @@ class DatatableController extends Controller
 
         if (!empty($search)) {
             $query->leftJoin('accounts', 'accounts.id', '=', 'transactions.account_id');
+            $query->leftJoin('categories', 'categories.id', '=', 'transactions.category_id');
 
             $query->where(function ($q) use ($search) {
                 $q->where('accounts.iban', 'like', "%{$search}%")
                     ->orWhere('bookingDate', 'like', "%{$search}%")
                     ->orWhere('debtorName', 'like', "%{$search}%")
                     ->orWhere('remittanceInformationUnstructured', 'like', "%{$search}%")
+                    ->orWhere('categories.name', 'like', "%{$search}%")
                     ->orWhere('transactionAmount_amount', 'like', "%{$search}%");
             });
         }
@@ -227,6 +229,7 @@ class DatatableController extends Controller
                     'debtorName' => $transaction->debtorNameFormat,
                     'remittanceInformationUnstructured' => json_decode($transaction->remittanceInformationUnstructured) ? json_decode($transaction->remittanceInformationUnstructured)[0] : '--',
                     'transactionAmount_amount' => $this::toColor(number_format($transaction->transactionAmount_amount, 2, ',', '.') . ' €', $color),
+                    'category_id' => $transaction->category ? $transaction->category->name : __('Sin categoría'),
                     'actions' => view('partials.datatable.transaction-actions', [
                         'transaction' => $transaction,
                         'account' => $transaction->account,

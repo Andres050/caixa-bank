@@ -12,26 +12,32 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-links.nav-link :href="route('dashboard.index')" :active="request()->routeIs(['dashboard.index', 'dashboard.show'])">
+                    <x-links.nav-link id="navigation-panel-control" :shepherd-text="trans('shepherd.navigation-panel-control')" :href="route('dashboard.index')" :active="request()->routeIs(['dashboard.index', 'dashboard.show'])">
                         {{ __('Dashboard') }}
                     </x-links.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-links.nav-link :href="route('dashboard.history')" :active="request()->routeIs('dashboard.history')">
+                    <x-links.nav-link id="navigation-history" :shepherd-text="trans('shepherd.navigation-history')" :href="route('dashboard.history')" :active="request()->routeIs('dashboard.history')">
                         {{ __('See History') }}
                     </x-links.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-links.nav-link :href="route('dashboard.clock')" :active="request()->routeIs('dashboard.clock')">
+                    <x-links.nav-link id="navigation-clock" :shepherd-text="trans('shepherd.navigation-clock')" :href="route('dashboard.clock')" :active="request()->routeIs('dashboard.clock')">
                         {{ __('Clock') }}
                     </x-links.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-links.nav-link :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
+                    <x-links.nav-link id="navigation-configuration" :shepherd-text="trans('shepherd.navigation-configuration')" :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
                         {{ __('Configuration') }}
+                    </x-links.nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-links.nav-link onclick="startTour()" class="cursor-pointer">
+                        {{ __('Ayuda') }}
                     </x-links.nav-link>
                 </div>
             </div>
@@ -39,14 +45,14 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex gap-4 sm:items-center sm:ms-6">
                 @if (request()->routeIs(['dashboard.index', 'dashboard.show']))
-                    <x-ui.month-selector class="sm:flex sm:items-center sm:ms-6" />
+                    <x-ui.month-selector id="navigation-month-selector" :shepherd-text="trans('shepherd.navigation-month-selector')" class="sm:flex sm:items-center sm:ms-6" />
                 @endif
 
-                <x-ui.lang-selector class="sm:flex sm:items-center" />
+                <x-ui.lang-selector id="navigation-lang-selector" :shepherd-text="trans('shepherd.navigation-lang-selector')" class="sm:flex sm:items-center" />
 
                 <x-inputs.dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-secondary bg-main1 hover:text-primary transition ease-in-out duration-150">
+                        <button id="navigation-user-dropdown" shepherd-text="{{trans('shepherd.navigation-user-dropdown')}}" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-secondary bg-main1 hover:text-primary transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
@@ -58,7 +64,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        @if (!request()->routeIs(['profile.edit', 'profile.bank.edit', 'profile.accounts.edit', 'profile.import.edit']))
+                        @if (!request()->routeIs(['profile.edit', 'profile.bank.edit', 'profile.accounts.edit', 'profile.import.edit', 'profile.categories']))
                             <x-inputs.dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-inputs.dropdown-link>
@@ -71,8 +77,8 @@
                                 {{ __('Accounts') }}
                             </x-inputs.dropdown-link>
 
-                            <x-inputs.dropdown-link :href="route('profile.import.edit')">
-                                {{ __('Import') }}
+                            <x-inputs.dropdown-link :href="route('profile.categories')">
+                                {{ __('Categories') }}
                             </x-inputs.dropdown-link>
                         @endif
 
@@ -146,7 +152,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                @if (!request()->routeIs(['profile.edit', 'profile.bank.edit', 'profile.accounts.edit', 'profile.import.edit']))
+                @if (!request()->routeIs(['profile.edit', 'profile.bank.edit', 'profile.accounts.edit', 'profile.import.edit', 'profile.categories']))
                     <x-links.responsive-nav-link :href="route('profile.edit')">
                         {{ __('Profile') }}
                     </x-links.responsive-nav-link>
@@ -159,8 +165,8 @@
                         {{ __('Accounts') }}
                     </x-links.responsive-nav-link>
 
-                    <x-links.responsive-nav-link :href="route('profile.import.edit')">
-                        {{ __('Import') }}
+                    <x-links.responsive-nav-link :href="route('profile.categories')">
+                        {{ __('Categories') }}
                     </x-links.responsive-nav-link>
                 @endif
 

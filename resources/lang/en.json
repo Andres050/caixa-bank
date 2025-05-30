@@ -203,5 +203,39 @@
     "of": "of",
     "results": "results",
     "times": "times",
-    "to": "to"
+    "to": "to" ,
+
+
+    "Categories": "Categories",
+    "Create Category": "Create Category",
+    "Update Category": "Update Category",
+    "Delete Category": "Delete Category",
+    "Show Filters": "Show Filters",
+    "Create Filter": "Create Filter",
+    "Category Type": "Category Type",
+    "Value": "Value",
+    "Enabled": "Enabled",
+    "Select Type": "Select Type",
+    "Exact": "Exact",
+    "Contains": "Contains",
+    "Starts With": "Starts With",
+    "Ends With": "Ends With",
+    "Update Transactions": "Update Transactions",
+
+
+    "Theme Active": "Theme Active",
+    "Update your theme for your current user": "Update your theme for your current user",
+    "Theme Type": "Theme Type",
+    "Update your account's chars info": "Update your account's chart info",
+    "Chars Info": "Chart Info",
+    "Chart Type": "Chart Type",
+    "All Expenses": "All Expenses",
+    "Category": "Category",
+    "Sin Categoria": "No Category",
+    "Main Color": "Main Color",
+    "Nav Active Color": "Nav Active Color",
+    "Nav Active Background Color": "Nav Active Background Color",
+    "Next": "Next",
+    "Ayuda": "Help",
+    "Close": "Close"
 }

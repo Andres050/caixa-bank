@@ -16,6 +16,8 @@
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-main2 px-4 md:px-0 overflow-hidden shadow-sm rounded-lg">
                         <x-box.item
+                            id="configuration-session-data"
+                            :shepherd-text="trans('shepherd.configuration-session-data')"
                             :title="__('Session data')"
                             :description="__('This will make the session data needed to process the api!')"
                             :button="__('UPDATE INFORMATION')"
@@ -41,6 +43,8 @@
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-4">
                         <div class="w-full lg:gap-16 bg-main2 px-4 md:px-0 overflow-hidden shadow-sm rounded-lg">
                             <x-box.item
+                                id="configuration-accounts-update"
+                                :shepherd-text="trans('shepherd.configuration-accounts-update')"
                                 :title="__('Accounts update')"
                                 :description="__('This will add all the accounts!')"
                                 :button="__('UPDATE Accounts')"
@@ -49,6 +53,8 @@
                         @if ($showUpdateAccounts)
                             <div class="w-full lg:gap-16 bg-main2 px-4 md:px-0 overflow-hidden shadow-sm rounded-lg">
                                 <x-box.item
+                                    id="configuration-update-all"
+                                    :shepherd-text="trans('shepherd.configuration-update-all')"
                                     :title="__('Transactions and balances update')"
                                     :description="__('This will add all the accounts balances and trasactions!')"
                                     :button="__('UPDATE ALL')"
@@ -58,7 +64,7 @@
                     </div>
                 </div>
 
-                <div id="sortable-accounts" class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
+                <div id="sortable-accounts" shepherd-text="{{trans('shepherd.sortable-accounts')}}" class="max-w-7xl mx-auto sm:px-6 lg:px-8 pb-4">
                     <p class="mt-1 text-sm text-secondary">
                         {{ __("You can reorder the accounts!") }}
                     </p>

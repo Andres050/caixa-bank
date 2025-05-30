@@ -203,5 +203,39 @@
     "of": "de",
     "results": "resultados",
     "times": "veces",
-    "to": "hasta"
+    "to": "hasta",
+
+
+    "Categories": "Categorías",
+    "Create Category": "Crear Categoría",
+    "Update Category": "Actualizar Categoría",
+    "Delete Category": "Eliminar Categoría",
+    "Show Filters": "Mostrar Filtros",
+    "Create Filter": "Crear Filtro",
+    "Category Type": "Tipo de Categoría",
+    "Value": "Valor",
+    "Enabled": "Habilitado",
+    "Select Type": "Seleccionar Tipo",
+    "Exact": "Exacto",
+    "Contains": "Contiene",
+    "Starts With": "Empieza con",
+    "Ends With": "Termina con",
+    "Update Transactions": "Actualizar Transacciones",
+
+
+    "Theme Active": "Tema Activo",
+    "Update your theme for your current user": "Actualizar tu tema para tu usuario actual",
+    "Theme Type": "Tipo de Tema",
+    "Update your account's chars info": "Actualizar la información de gráficos de tu cuenta",
+    "Chars Info": "Información de Gráficos",
+    "Chart Type": "Tipo de Gráfico",
+    "All Expenses": "Todos los Gastos",
+    "Category": "Categoría",
+    "Sin Categoria": "Sin Categoría",
+    "Main Color": "Color Principal",
+    "Nav Active Color": "Color Activo de Navegación",
+    "Nav Active Background Color": "Color de Fondo Activo de Navegación",
+    "Next": "Siguiente",
+    "Ayuda": "Ayuda",
+    "Close": "Cerrar"
 }

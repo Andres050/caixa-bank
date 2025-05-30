@@ -191,6 +191,7 @@ class NordigenController extends Controller
                         'internalTransactionId' => $transaction['internalTransactionId'] ?? null,
                         'debtorName' => $transaction['debtorName'] ?? null,
                         'debtorAccount' => $transaction['debtorAccount'] ?? null,
+                        'category_id' => Transaction::getCategoryId(isset($transaction['remittanceInformationUnstructuredArray']) ? json_encode($transaction['remittanceInformationUnstructuredArray']) : null),
                     ]);
                 } else {
                     Transaction::create([
@@ -208,6 +209,7 @@ class NordigenController extends Controller
                         'debtorName' => $transaction['debtorName'] ?? null,
                         'debtorAccount' => $transaction['debtorAccount'] ?? null,
                         'account_id' => $accountId,
+                        'category_id' => Transaction::getCategoryId(isset($transaction['remittanceInformationUnstructuredArray']) ? json_encode($transaction['remittanceInformationUnstructuredArray']) : null),
                     ]);
                 }
             }

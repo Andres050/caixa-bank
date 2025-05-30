@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NordigenController;
@@ -41,6 +42,8 @@ Route::middleware('auth')->group(function () {
     // Profile [Bank routes]
     Route::get('/profile/bank', [BankController::class, 'edit'])->name('profile.bank.edit');
     Route::patch('/profile/bank', [BankController::class, 'update'])->name('profile.bank.update');
+    Route::patch('/profile/bank/chars', [BankController::class, 'chars'])->name('profile.bank.chars');
+    Route::patch('/profile/bank/theme', [BankController::class, 'theme'])->name('profile.bank.theme');
     Route::patch('/profile/schedule', [BankController::class, 'schedule'])->name('profile.accounts.schedule');
     Route::post('/profile/schedule/check', [BankController::class, 'scheduleTasks'])->name('profile.accounts.scheduleTasks');
 
@@ -68,6 +71,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/import/accounts', [ImportController::class, 'accounts'])->name('profile.import.accounts');
     Route::post('/profile/import/transactions', [ImportController::class, 'transaction'])->name('profile.import.transactions');
     Route::post('/profile/import/balances', [ImportController::class, 'balances'])->name('profile.import.balances');
+
+    // Profile [Categories routes]
+    Route::get('/profile/categories', [CategoriesController::class, 'show'])->name('profile.categories');
+    Route::post('/profile/categories', [CategoriesController::class, 'create'])->name('profile.category.create');
+    Route::patch('/profile/categories/{id}', [CategoriesController::class, 'update'])->name('profile.category.update');
+    Route::delete('/profile/categories/{id}', [CategoriesController::class, 'destroy'])->name('profile.category.destroy');
+    Route::post('/profile/transactions-categories/update', [CategoriesController::class, 'setAllCategoriesFilter'])->name('profile.categories.update-transactions');
+
+    // Profile [Categories filter routes]
+    Route::post('/profile/categories/filter', [CategoriesController::class, 'createFilter'])->name('profile.categories.filter');
+    Route::patch('/profile/categories/filter/{id}', [CategoriesController::class, 'updateFilter'])->name('profile.categories.filter.update');
+    Route::delete('/profile/categories/filter/{id}', [CategoriesController::class, 'destroyFilter'])->name('profile.category.filter.destroy');
 
     // Profile [Datatable routes]
     Route::get('/datatable/accounts', [DatatableController::class, 'accounts'])->name('api.datatable.accounts');

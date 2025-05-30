@@ -66,6 +66,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public static array $charsTypes = [
+        'all',
+        'categories'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -76,8 +81,11 @@ class User extends Authenticatable
         'email',
         'password',
         'schedule_times',
-        'execute_login'
+        'execute_login',
+        'chars',
+        'theme'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -97,6 +105,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'theme' => 'json',
     ];
 
     public function bank(): HasOne
@@ -112,6 +121,26 @@ class User extends Authenticatable
     public function schedule(): HasMany
     {
         return $this->hasMany(ScheduledTasks::class, 'user_id');
+    }
+
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class, 'user_id');
+    }
+
+    public function getThemeMain3Attribute(): string
+    {
+        return $this->theme['main3'] ?? '#364791';
+    }
+
+    public function getThemeNavActiveAttribute(): string
+    {
+        return $this->theme['navActive'] ?? '#f0f0f0';
+    }
+
+    public function getThemeNavActiveBgAttribute(): string
+    {
+        return $this->theme['navActiveBg'] ?? '#3b3b3b';
     }
 
     /**

@@ -1,4 +1,4 @@
-<div>
+<div {{ $attributes }}>
     <div class="{{ $class ?? 'max-w-7xl mx-auto sm:px-6 lg:px-8 pt-4' }} ">
         <h2 class="text-lg font-medium text-gray-100">
             {{ $title }}

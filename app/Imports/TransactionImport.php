@@ -39,6 +39,7 @@ class TransactionImport implements ToModel, WithHeadingRow
                 'debtorName' => $row['debtor_name'] ?? null,
                 'debtorAccount' => $row['debtor_account'] ?? null,
                 'account_id' => $account->id,
+                'category_id' => Transaction::getCategoryId($row['remittance_information'] ?? null),
             ]);
         }
 

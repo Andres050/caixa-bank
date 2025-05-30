@@ -96,6 +96,7 @@ class TransactionsController extends Controller
                 'debtorName' => $validated['debtorName'] ?? null,
                 'debtorAccount' => $validated['debtorAccount'] ?? null,
                 'account_id' => $account->code,
+                'category_id' => Transaction::getCategoryId($validated['remittanceInformationUnstructured'] ?? null),
             ]);
 
             return Redirect::route('profile.transaction.edit', ['id' => $account->code])
@@ -156,6 +157,7 @@ class TransactionsController extends Controller
                 'debtorName' => $request->input('debtorName'),
                 'debtorAccount' => $request->input('debtorAccount'),
                 'account_id' => $account->code,
+                'category_id' => Transaction::getCategoryId($request->input('remittanceInformationUnstructured')),
             ]);
 
             DB::commit();

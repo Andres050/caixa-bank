@@ -12,8 +12,9 @@ $(document).ready(function () {
         var labels = categoryCtx.getAttribute('data-labels').split(",");
         var values = categoryCtx.getAttribute('data-values').split(",").map(Number);
         var colors = categoryCtx.getAttribute('data-colors').split(",");
+        var defaultLabel = categoryCtx.getAttribute('data-default-label');
 
-        console.log('Chart is working!');
+        console.log('Chart DONUT is working!');
         let chartCategoryCTX = new Chart(categoryCtx, {
             type: 'doughnut',
             data: {
@@ -38,6 +39,11 @@ $(document).ready(function () {
             const color = colors[index];
             const legendItem = document.createElement('div');
             legendItem.className = 'legend-item';
+
+            if (!label) {
+                label = defaultLabel;
+            }
+
             legendItem.innerHTML = `
                 <div class="legend-color-box" style="background-color:${color}"></div>
                 <span>${label}</span>
@@ -89,15 +95,16 @@ $(document).ready(function () {
     function setBalanceChart() {
         var labels = balanceCtx.getAttribute('data-labels').split(",");
         var values = balanceCtx.getAttribute('data-values').split(",").map(Number);
+        var color = balanceCtx.getAttribute('data-color');
 
-        console.log('Chart is working!');
+        console.log('Chart BALANCE is working!');
         let chartBalanceChart = new Chart(balanceCtx, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
                     data: values,
-                    borderColor: tailwindConfig.theme.extend.colors.main3,
+                    borderColor: color,
                     tension: 0.3,
                     pointBackgroundColor: tailwindConfig.theme.extend.colors.primary,
                     fill: false

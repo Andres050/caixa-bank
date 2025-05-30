@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bank;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -68,6 +69,40 @@ class BankController extends Controller
 
             return Redirect::route('profile.bank.edit')
                 ->with('error', __('status.bankcontroller.update-account-failed'));
+        }
+    }
+
+    public function chars(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'chars' => ['required', 'in:'. implode(',', User::$charsTypes)],
+        ]);
+
+        try {
+            $user = Auth::user();
+            $user->update(['chars' => $validated['chars']]);
+
+            return redirect()->route('profile.bank.edit')->with('status', __('status.bankcontroller.chars-updated'));
+        } catch (Exception $e) {
+            Log::error('Error al actualizar los caracteres del banco: ' . $e->getMessage());
+            return redirect()->route('profile.bank.edit')->with('error', __('status.bankcontroller.chars-error'));
+        }
+    }
+
+    public function theme(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'theme' => ['required'],
+        ]);
+
+        try {
+            $user = Auth::user();
+            $user->update(['theme' => $validated['theme']]);
+
+            return redirect()->route('profile.bank.edit')->with('status', __('status.bankcontroller.theme-updated'));
+        } catch (Exception $e) {
+            Log::error('Error al actualizar el tema del banco: ' . $e->getMessage());
+            return redirect()->route('profile.bank.edit')->with('error', __('status.bankcontroller.theme-error'));
         }
     }
 
